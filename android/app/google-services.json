@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "507428226500",
+    "project_id": "ticketflutter-fc009",
+    "storage_bucket": "ticketflutter-fc009.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:507428226500:android:23e0ce084ae5e8dcb99091",
+        "android_client_info": {
+          "package_name": "com.example.ticket_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAIbTK6D6MDL8c_jmbu1YfA-Exn124maQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
