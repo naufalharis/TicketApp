@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'screens/Halaman_Depan.dart';
+import 'screens/History.dart';
 import 'firebase_options.dart'; // Hasil dari flutterfire configure
 
 void main() async {
@@ -11,6 +12,7 @@ void main() async {
   );
   runApp(const MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -26,6 +28,10 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home: const OnboardingScreen(),
+      routes: {
+        '/history': (context) => const HistoryScreen(),
+        // ...route lain jika ada...
+      },
     );
   }
 }

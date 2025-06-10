@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../screens/Bukti_PembayaranScreen.dart';
 import '../models/tiket.dart';
@@ -7,6 +8,29 @@ class MetodeKartuKreditScreen extends StatelessWidget {
   final Tiket tiket;
 
   const MetodeKartuKreditScreen({super.key, required this.tiket});
+
+  Future<void> _simpanTransaksi(BuildContext context) async {
+    try {
+      await FirebaseFirestore.instance.collection('transaksi').add({
+        'name': tiket.name,
+        'type': tiket.type,
+        'category': tiket.category,
+        'price': tiket.price,
+        'metode': 'Kartu Kredit',
+        'tanggal': DateTime.now(),
+      });
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => BuktiPembayaranScreen(tiket: tiket),
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Gagal menyimpan transaksi')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +66,10 @@ class MetodeKartuKreditScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20), // Margin bawah untuk judul
+                    const SizedBox(height: 20),
                     Container(
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 229, 229, 229), // Background abu-abu muda
+                        color: const Color.fromARGB(255, 229, 229, 229),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       padding: const EdgeInsets.all(16),
@@ -103,14 +127,7 @@ class MetodeKartuKreditScreen extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => BuktiPembayaranScreen(tiket: tiket),
-                            ),
-                          );
-                        },
+                        onPressed: () => _simpanTransaksi(context),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue,
                           foregroundColor: Colors.white,

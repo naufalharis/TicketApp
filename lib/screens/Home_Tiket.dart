@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../models/tiket.dart';
 import 'Pembayaran.dart';
+import 'History.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -24,6 +24,17 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         iconTheme: const IconThemeData(color: Colors.black),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.history, color: Colors.black),
+            tooltip: 'Riwayat Pembelian',
+            onPressed: () {
+              Navigator.pushNamed(context, '/history');
+              // Atau jika punya screen khusus:
+              // Navigator.push(context, MaterialPageRoute(builder: (_) => HistoryScreen()));
+            },
+          ),
+        ],
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('tikets').snapshots(),

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../screens/Bukti_PembayaranScreen.dart';
 import '../models/tiket.dart';
@@ -6,6 +7,29 @@ class MetodeQRISScreen extends StatelessWidget {
   final Tiket tiket;
 
   const MetodeQRISScreen({super.key, required this.tiket});
+
+  Future<void> _simpanTransaksi(BuildContext context) async {
+    try {
+      await FirebaseFirestore.instance.collection('transaksi').add({
+        'name': tiket.name,
+        'type': tiket.type,
+        'category': tiket.category,
+        'price': tiket.price,
+        'metode': 'QRIS',
+        'tanggal': DateTime.now(),
+      });
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => BuktiPembayaranScreen(tiket: tiket),
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Gagal menyimpan transaksi')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,14 +90,7 @@ class MetodeQRISScreen extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => BuktiPembayaranScreen(tiket: tiket),
-                            ),
-                          );
-                        },
+                        onPressed: () => _simpanTransaksi(context),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue,
                           foregroundColor: Colors.white,
